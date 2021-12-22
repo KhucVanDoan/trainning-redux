@@ -8,22 +8,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
-const inittial=[
-    {
-        id:1,
-        name:"hihi",
-        email:"hihi@gmail.com",
-        age:21
-    },
-    {
-        id:2,
-        name:"haha",
-        email:"haha@gmail.com",
-        age:21
-    }
-]
+import {useSelector, useDispatch} from 'react-redux'
+import { deleteStudent } from '../actions/action';
 
  const Home =()=> {
+   const student=useSelector(state=>state);
+   const dispatch=useDispatch()
+   const handleClick=(id)=>{
+     dispatch(deleteStudent(id));
+   }
   return (
       <Container maxWidth="xm" style={{marginTop:'100px'}}>
          <Link to='/add'> <Button variant="outlined" >ADD</Button></Link>
@@ -38,7 +31,7 @@ const inittial=[
           </TableRow>
         </TableHead>
         <TableBody>
-          { inittial.map((row) => (
+          { student.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -49,7 +42,7 @@ const inittial=[
               <TableCell>{row.email}</TableCell>
               <TableCell>{row.age}</TableCell>
               <TableCell><Link to={`/edit/${row.id}`}><Button variant="contained" color="success">Edit</Button></Link>
-              <Button variant="contained" color="error">Delete</Button>
+              <Button variant="contained" color="error" onClick={()=>handleClick(row.id)}>Delete</Button>
               </TableCell>
             </TableRow>
           ))}

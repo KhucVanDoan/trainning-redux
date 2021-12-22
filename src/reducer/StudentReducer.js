@@ -1,4 +1,4 @@
-import { ADD_STUDENT, DELETE_STUDENT } from '../actions/actionType'
+import { ADD_STUDENT, UPDATE_STUDENT,DELETE_STUDENT } from '../actions/actionType'
 const inittial=[
     {
         id:1,
@@ -19,8 +19,11 @@ const StudentReducer=(state=inittial,action)=>{
         case ADD_STUDENT:
             state=[...state,action.payload]
             return state
+            case UPDATE_STUDENT:
+                const studentuodate=state.map(student=>student.id===action.payload.id?action.payload:student)
+                return studentuodate
             case DELETE_STUDENT:
-                const filterState=state.filter(student=>student.id===action.payload?action.payload:student);
+                const filterState=state.filter((student)=>student.id!==action.payload  && student);
                 return filterState;
             default:
                 return state
